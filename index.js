@@ -1,5 +1,6 @@
 require("log-a-log");
 
+const bytes = require("bytes");
 const durations = require("durations");
 const fs = require("fs");
 
@@ -14,6 +15,7 @@ var writesRemaining = writeCount;
 console.log("Opening file...");
 
 const reportWatch = durations.stopwatch().start();
+var reportBytes = 0;
 
 fs.open(testFile, 'w', (error, fd) => {
   if (error) {
@@ -27,8 +29,10 @@ fs.open(testFile, 'w', (error, fd) => {
 const write = (fd) => {
   writesRemaining--;
   if (reportWatch.duration().millis() >= 1000) {
-    console.log(`Write ${writeCount - writesRemaining} of ${writeCount}`);
+    bps = reportBytes / reportWatch.duration().seconds()
+    console.log(`Write ${writeCount - writesRemaining} of ${writeCount} : ${bytes(bps)}/s`);
     reportWatch.reset().start();
+    reportBytes = 0;
   }
 
   fs.write(fd, buffer, 0, bufferSize, (error, written, buffer) => {
@@ -36,6 +40,7 @@ const write = (fd) => {
       console.log("Error");
       console.log(`Error writing to file: ${error}`);
     } else if (writesRemaining > 0) {
+      reportBytes += bufferSize;
       write(fd);
     } else {
       console.log("Done writing to file. Closing...");
@@ -46,7 +51,8 @@ const write = (fd) => {
           console.log(`Error closing the file: ${error}`);
         } else {
           watch.stop();
-          console.log(`Closed. Took ${watch} to write ${fileSize} bytes (${writeCount} MiB)`);
+          bps = fileSize / watch.duration().seconds()
+          console.log(`Closed. Took ${watch} to write ${bytes(fileSize)} : ${bytes(bps)}/s`);
         }
       });
     }
