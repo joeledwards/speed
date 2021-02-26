@@ -12,6 +12,7 @@
   "dependencies": {
     "bytes": "^2.2.0",
     "durations": "^1.0.2",
-    "log-a-log": "^1.0.0"
+    "log-a-log": "^1.0.0",
+    "yargs": "^16.2.0"
   }
 }

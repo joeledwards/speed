@@ -5,7 +5,7 @@ const durations = require("durations");
 const fs = require("fs");
 
 const bufferSize = 1024*1024;
-const writeCount = 10000;
+const writeCount = 100000;
 const fileSize = writeCount * bufferSize;
 const buffer = new Buffer(bufferSize);
 const testFile = "test.dat";
