@@ -1,18 +1,38 @@
 {
-  "name": "speed",
+  "name": "@buzuli/speed",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Speed test utlity",
+  "main": "bin/speed.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "lint": "standard",
+    "lint:fix": "standard --fix",
+    "start": "node ./bin/speed.js"
+  },
+  "files": [
+    "package.json",
+    "README.md",
+    "bin/*",
+    "commands/*",
+    "lib/**/*.js"
+  ],
+  "bin": {
+    "speed": "./bin/speed.js"
   },
   "author": "Joel Edwards",
   "license": "MIT",
   "dependencies": {
-    "bytes": "^2.2.0",
-    "durations": "^1.0.2",
-    "log-a-log": "^1.0.0",
+    "@buzuli/app": "^1.2.1",
+    "@buzuli/color": "^2.2.2",
+    "@buzuli/json": "^2.1.0",
+    "@buzuli/meter": "^1.4.0",
+    "@buzuli/throttle": "^2.0.2",
+    "bytes": "^3.1.0",
+    "durations": "^3.4.2",
+    "log-a-log": "^6.1.0",
     "yargs": "^16.2.0"
+  },
+  "devDependencies": {
+    "standard": "^16.0.3"
   }
 }
